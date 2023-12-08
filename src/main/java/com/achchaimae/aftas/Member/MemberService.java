@@ -25,6 +25,7 @@ public class MemberService {
     public List<MemberRespDTO> getMembers() {
         return memberRepository.findAll().stream().map(validation -> modelMapper.map(validation, MemberRespDTO.class)).collect(Collectors.toList());
     }
+
     public MemberRespDTO saveMember(MemberReqDTO member) {
         return modelMapper.map(memberRepository.save(modelMapper.map(member, Member.class)), MemberRespDTO.class);
 
