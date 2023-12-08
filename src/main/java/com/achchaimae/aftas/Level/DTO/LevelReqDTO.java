@@ -16,6 +16,6 @@ public class LevelReqDTO {
     @Min(value = 0, message = "Points must be a positive number")
     private Integer points;
 
-    @NotNull(message = "Fishes ID is required")
-    private Integer fishes_Id;
+//    @NotNull(message = "Fishes ID is required")
+//    private Integer fishes_Id;
 }

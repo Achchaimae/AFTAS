@@ -23,7 +23,7 @@ public class MemberService implements MemberServiceInterface{
     ModelMapper modelMapper;
 
     public List<MemberRespDTO> getMembers() {
-        return memberRepository.findAll().stream().map(validation -> modelMapper.map(validation, MemberRespDTO.class)).collect(Collectors.toList());
+        return memberRepository.findAll().stream().map(member -> modelMapper.map(member, MemberRespDTO.class)).collect(Collectors.toList());
     }
 
     public MemberRespDTO saveMember(MemberReqDTO member) {
