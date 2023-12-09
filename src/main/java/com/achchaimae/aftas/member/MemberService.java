@@ -51,10 +51,12 @@ public class MemberService implements MemberServiceInterface{
         }
         return 0;
     }
-    public MemberRespDTO findMember(Integer mediaId) {
-        Optional<Member> memberOptional = memberRepository.findById(mediaId);
-        if(memberOptional.isPresent()){
-            return modelMapper.map(memberRepository.findById(mediaId) , MemberRespDTO.class);
+
+    public MemberRespDTO findMember(Integer memberId) {
+        Optional<Member> memberOptional = memberRepository.findById(memberId);
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            return modelMapper.map(member, MemberRespDTO.class);
         }
         return null;
     }

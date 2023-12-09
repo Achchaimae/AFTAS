@@ -9,6 +9,7 @@ import java.time.LocalTime;
 @Data
 public class CompetitionReqDTO {
     @NotBlank(message = "Code is required")
+    @Pattern(regexp = "^[A-Za-z]{3}-\\d{2}-\\d{2}-\\d{2}$")
     private String code;
     @NotNull(message = "Date is required")
     private LocalDate date;

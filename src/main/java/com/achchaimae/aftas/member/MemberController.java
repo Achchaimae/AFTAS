@@ -18,7 +18,7 @@ public class MemberController {
     ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<MemberRespDTO>> getValidations(){
+    public ResponseEntity<List<MemberRespDTO>> getMembers(){
         return ResponseEntity.ok().body(memberService.getMembers());
     }
 

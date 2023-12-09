@@ -12,7 +12,7 @@ public class MemberReqDTO {
     @NotBlank(message = "Name is required")
     private String name;
     @NotBlank(message = "Family name is required")
-    private String familyName;
+    private String familtyName;
     @NotNull(message = "Accession date is required")
     private LocalDate accessionDate;
     @NotBlank(message = "Nationality is required")
