@@ -23,18 +23,34 @@ public class HuntingController {
     public ResponseEntity<List<HuntingRespDTO>> getMembers(){
         return ResponseEntity.ok().body(huntingService.getHuntings());
     }
+
     @PostMapping
     public ResponseEntity<HuntingRespDTO> save(@RequestBody HuntingReqDTO hunting)
     {
         HuntingRespDTO hunting1 = huntingService.saveHunting(hunting);
-        return ResponseEntity.ok().body(hunting1);
+        if(hunting1 != null)
+        {
+            return  ResponseEntity.ok().body(hunting1);
+        }
+        return ResponseEntity.badRequest().body(null);
     }
 
+
+//    public ResponseEntity<HuntingRespDTO> update(@PathVariable Integer id, @RequestBody HuntingReqDTO hunting)
+//    {
+//        return ResponseEntity.ok().body(huntingService.updateHunting(hunting,id));
+//    }
     @PutMapping("/{id}")
     public ResponseEntity<HuntingRespDTO> update(@PathVariable Integer id, @RequestBody HuntingReqDTO hunting)
     {
-        return ResponseEntity.ok().body(huntingService.updateHunting(hunting,id));
+        HuntingRespDTO hunting1 = huntingService.updateHunting(hunting,id);;
+        if(hunting1 != null)
+        {
+            return  ResponseEntity.ok().body(hunting1);
+        }
+        return ResponseEntity.badRequest().body(null);
     }
+
 
     @GetMapping("/find/{id}")
     public ResponseEntity<HuntingRespDTO> getHuntingById(@PathVariable Integer id)
@@ -43,7 +59,7 @@ public class HuntingController {
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<String> deleteQuiz(@PathVariable Integer id)
+    public ResponseEntity<String> delete(@PathVariable Integer id)
     {
         Integer deleted = huntingService.DeleteHunting(id);
         if(deleted == 1)

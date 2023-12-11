@@ -1,5 +1,6 @@
 package com.achchaimae.aftas.level;
 
+import com.achchaimae.aftas.Exception.RecordAlreadyExistsException;
 import com.achchaimae.aftas.level.DTO.LevelReqDTO;
 import com.achchaimae.aftas.level.DTO.LevelRespDTO;
 import org.modelmapper.ModelMapper;
@@ -22,24 +23,37 @@ public class LevelService implements LevelServiceInterface{
     @Autowired
     ModelMapper modelMapper;
 
-    public List<LevelRespDTO> getLevels() {
-        return levelRepository.findAll().stream().map(level -> modelMapper.map(level, LevelRespDTO.class)).collect(Collectors.toList());
-    }
+public List<LevelRespDTO> getLevels() {
+    return levelRepository.findAll().stream()
+            .map(level -> modelMapper.map(level, LevelRespDTO.class))
+            .collect(Collectors.toList());
+}
 
     public LevelRespDTO saveLevel(LevelReqDTO level) {
-        return modelMapper.map(levelRepository.save(modelMapper.map(level, Level.class)), LevelRespDTO.class);
+        // Check if the level already exists
+        if (levelRepository.existsById(level.getCode())) {
+            throw new RecordAlreadyExistsException("Level with code " + level.getCode() + " already exists.");
+        }
 
+        // Check if the new level's points are higher than existing levels' points
+        List<Level> existingLevels = levelRepository.findAll();
+        for (Level existingLevel : existingLevels) {
+            if (level.getPoints() <= existingLevel.getPoints()) {
+                throw new IllegalArgumentException("Points must be higher than existing levels' points.");
+            }
+        }
+
+        return modelMapper.map(levelRepository.save(modelMapper.map(level, Level.class)), LevelRespDTO.class);
     }
+
     public LevelRespDTO updateLevel(LevelReqDTO level, Integer id) {
         Optional<Level> levelOptional = levelRepository.findById(id);
-        if(levelOptional.isPresent()){
+        if (levelOptional.isPresent()) {
             level.setCode(levelOptional.get().getCode());
-            return modelMapper.map(levelRepository.save(modelMapper.map(level , Level.class)), LevelRespDTO.class);
-
+            return modelMapper.map(levelRepository.save(modelMapper.map(level, Level.class)), LevelRespDTO.class);
         }
         return null;
     }
-
 
     public Integer DeleteLevel(Integer levelId){
         Optional<Level> exist = levelRepository.findById(levelId);

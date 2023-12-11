@@ -1,5 +1,7 @@
 package com.achchaimae.aftas.member;
 
+import com.achchaimae.aftas.Exception.RecordAlreadyExistsException;
+import com.achchaimae.aftas.Exception.ResourceNotFoundException;
 import com.achchaimae.aftas.member.DTO.MemberReqDTO;
 import com.achchaimae.aftas.member.DTO.MemberRespDTO;
 import org.modelmapper.ModelMapper;
@@ -26,21 +28,32 @@ public class MemberService implements MemberServiceInterface{
         return memberRepository.findAll().stream().map(member -> modelMapper.map(member, MemberRespDTO.class)).collect(Collectors.toList());
     }
 
+//    public MemberRespDTO saveMember(MemberReqDTO member) {
+//        return modelMapper.map(memberRepository.save(modelMapper.map(member, Member.class)), MemberRespDTO.class);
+//
+//    }
     public MemberRespDTO saveMember(MemberReqDTO member) {
-        return modelMapper.map(memberRepository.save(modelMapper.map(member, Member.class)), MemberRespDTO.class);
-
-    }
-
-    public MemberRespDTO updateMember(MemberReqDTO member, Integer id) {
-        Optional<Member> memberOptional = memberRepository.findById(id);
-        if(memberOptional.isPresent()){
-            member.setNum(memberOptional.get().getNum());
-            return modelMapper.map(memberRepository.save(modelMapper.map(member , Member.class)), MemberRespDTO.class);
-
+        // Check if the member already exists
+        if (memberRepository.existsById(member.getNum())) {
+            throw new RecordAlreadyExistsException("Member with num " + member.getNum() + " already exists.");
         }
-        return null;
+
+        return modelMapper.map(memberRepository.save(modelMapper.map(member, Member.class)), MemberRespDTO.class);
     }
 
+public MemberRespDTO updateMember(MemberReqDTO member, Integer id) {
+    Optional<Member> memberOptional = memberRepository.findById(id);
+    if (memberOptional.isPresent()) {
+        Member existingMember = memberOptional.get();
+        if (existingMember.getNum() != member.getNum() && memberRepository.existsById(member.getNum())) {
+            throw new RecordAlreadyExistsException("Member with num " + member.getNum() + " already exists.");
+        }
+        member.setNum(Integer.valueOf(existingMember.getNum())); // Convert int to Integer
+        return modelMapper.map(memberRepository.save(modelMapper.map(member, Member.class)), MemberRespDTO.class);
+    } else {
+        throw new ResourceNotFoundException("Member with id " + id + " not found.");
+    }
+}
 
     public Integer DeleteMember(Integer memberId){
         Optional<Member> exist = memberRepository.findById(memberId);

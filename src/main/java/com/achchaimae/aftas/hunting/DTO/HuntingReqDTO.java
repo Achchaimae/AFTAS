@@ -12,12 +12,12 @@ public class HuntingReqDTO {
     @Min(value = 0, message = "Number of fish must be a positive number")
     private Integer numberOfFish;
 
-    @NotNull(message = "Fish ID is required")
-    private Integer fish_Id;
+    @NotBlank(message = "Fish ID is required")
+    private String fish_Id;
 
     @NotNull(message = "Member ID is required")
     private Integer member_Id;
 
-    @NotNull(message = "Competition ID is required")
-    private Integer competition_Id;
+    @NotBlank(message = "Competition ID is required")
+    private String competition_Id;
 }

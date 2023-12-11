@@ -39,7 +39,7 @@ public FishRespDTO saveFish(FishReqDTO fishReqDTO) {
 
     Level level = levelRepository.findById(fishReqDTO.getLevel_code()).orElse(null);
     if (level == null) {
-//i need to add exeption
+        //i need to add exeption
     }
 
     fish.setLevel(level);

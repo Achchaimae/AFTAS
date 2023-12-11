@@ -18,4 +18,9 @@ public class RankingID implements Serializable {
     @ManyToOne
     @JoinColumn(name = "member_code")
     private Member member;
+    public RankingID() {}
+    public RankingID(Competition competition, Member member) {
+        this.competition = competition;
+        this.member = member;
+    }
 }
