@@ -26,9 +26,5 @@ public class CompetitionReqDTO {
     @NotNull(message = "Amount is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Amount must be greater than 0")
     private Float amount ;
-    @NotNull(message = "Ranking ID is required")
-    private Integer ranking_id;
-    @NotNull(message = "Hunting ID is required")
-    private Integer hunting_id;
 
 }

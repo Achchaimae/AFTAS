@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 public class CompetitionRespDTO {
@@ -16,7 +17,7 @@ public class CompetitionRespDTO {
     private Integer numberOfParticipants;
     private String Location;
     private Float amount ;
-    private RankingReqDTO ranking;
-    private HuntingReqDTO hunting;
+    private List<RankingReqDTO> ranking;
+    private List<HuntingReqDTO> hunting;
 }
 

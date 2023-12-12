@@ -29,11 +29,17 @@ public class CompetitionService implements CompetitionServiceInterface{
         return competitionRepository.findAll().stream().map(competition -> modelMapper.map(competition, CompetitionRespDTO.class)).collect(Collectors.toList());
     }
 
-    public CompetitionRespDTO saveCompetition(CompetitionReqDTO competition) {
-        return modelMapper.map(competitionRepository.save(modelMapper.map(competition, Competition.class)), CompetitionRespDTO.class);
-
+//    public CompetitionRespDTO saveCompetition(CompetitionReqDTO competition) {
+//        return modelMapper.map(competitionRepository.save(modelMapper.map(competition, Competition.class)), CompetitionRespDTO.class);
+//
+//    }
+public CompetitionRespDTO saveCompetition(CompetitionReqDTO competition) {
+    if (competitionRepository.existsByDate(competition.getDate())) {
+        throw new RecordAlreadyExistsException("Competition with date " + competition.getDate() + " and city " + competition.getLocation() + " already exists.");
     }
 
+    return modelMapper.map(competitionRepository.save(modelMapper.map(competition, Competition.class)), CompetitionRespDTO.class);
+}
 
 public CompetitionRespDTO updateCompetition(CompetitionReqDTO competition, String code) {
     Optional<Competition> competitionOptional = competitionRepository.findById(code);
