@@ -4,11 +4,10 @@ import com.achchaimae.aftas.Exception.RecordAlreadyExistsException;
 import com.achchaimae.aftas.Exception.ResourceNotFoundException;
 import com.achchaimae.aftas.competition.DTO.CompetitionReqDTO;
 import com.achchaimae.aftas.competition.DTO.CompetitionRespDTO;
-import com.achchaimae.aftas.member.DTO.MemberReqDTO;
-import com.achchaimae.aftas.member.DTO.MemberRespDTO;
-import com.achchaimae.aftas.member.Member;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,14 +24,16 @@ public class CompetitionService implements CompetitionServiceInterface{
     }
     @Autowired
     ModelMapper modelMapper;
-    public List<CompetitionRespDTO> getCompetitions() {
-        return competitionRepository.findAll().stream().map(competition -> modelMapper.map(competition, CompetitionRespDTO.class)).collect(Collectors.toList());
+//    public List<CompetitionRespDTO> getCompetitions() {
+//        return competitionRepository.findAll().stream().map(competition -> modelMapper.map(competition, CompetitionRespDTO.class)).collect(Collectors.toList());
+//    }
+//
+
+    public Page<CompetitionRespDTO> getCompetitions(Pageable pageable) {
+        Page<Competition> entityPage = competitionRepository.findAll(pageable);
+        return entityPage.map(entity -> modelMapper.map(entity, CompetitionRespDTO.class));
     }
 
-//    public CompetitionRespDTO saveCompetition(CompetitionReqDTO competition) {
-//        return modelMapper.map(competitionRepository.save(modelMapper.map(competition, Competition.class)), CompetitionRespDTO.class);
-//
-//    }
 public CompetitionRespDTO saveCompetition(CompetitionReqDTO competition) {
     if (competitionRepository.existsByDate(competition.getDate())) {
         throw new RecordAlreadyExistsException("Competition with date " + competition.getDate() + " and city " + competition.getLocation() + " already exists.");

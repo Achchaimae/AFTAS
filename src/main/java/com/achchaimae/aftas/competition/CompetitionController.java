@@ -2,15 +2,15 @@ package com.achchaimae.aftas.competition;
 
 import com.achchaimae.aftas.competition.DTO.CompetitionReqDTO;
 import com.achchaimae.aftas.competition.DTO.CompetitionRespDTO;
-import com.achchaimae.aftas.member.DTO.MemberReqDTO;
-import com.achchaimae.aftas.member.DTO.MemberRespDTO;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("competition")
@@ -23,11 +23,15 @@ public class CompetitionController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping
-    public ResponseEntity<List<CompetitionRespDTO>> getCompetition(){
-        return ResponseEntity.ok().body(competitionService.getCompetitions());
-    }
+//    @GetMapping
+//    public ResponseEntity<List<CompetitionRespDTO>> getCompetition(){
+//        return ResponseEntity.ok().body(competitionService.getCompetitions());
+//    }
+@GetMapping
+public ResponseEntity<Page<CompetitionRespDTO>> getCompetition(Pageable pageable) {
 
+    return ResponseEntity.ok().body(competitionService.getCompetitions(pageable));
+}
     @PostMapping
     public ResponseEntity<CompetitionRespDTO> save(@Valid @RequestBody CompetitionReqDTO competition) {
         CompetitionRespDTO competition1 = competitionService.saveCompetition(competition);

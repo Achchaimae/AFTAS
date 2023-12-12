@@ -73,4 +73,30 @@ public MemberRespDTO updateMember(MemberReqDTO member, Integer id) {
         }
         return null;
     }
+    public MemberRespDTO findMemberByAtt(String searchParam) {
+
+            Optional<Member> memberOptional;
+
+            // Searching by num (assuming num is an Integer field)
+            try {
+                Integer num = Integer.parseInt(searchParam);
+                memberOptional = memberRepository.findById(num);
+                if (memberOptional.isPresent()) {
+                    Member member = memberOptional.get();
+                    return modelMapper.map(member, MemberRespDTO.class);
+                }
+            } catch (NumberFormatException ignored) {
+                // The search parameter is not a valid integer
+            }
+
+            // Searching by name or family name
+            memberOptional = memberRepository.findByNameOrFamiltyName(searchParam, searchParam);
+            if (memberOptional.isPresent()) {
+                Member member = memberOptional.get();
+                return modelMapper.map(member, MemberRespDTO.class);
+            }
+
+            return null;
+        }
 }
+

@@ -40,6 +40,17 @@ public class MemberController {
     {
         return ResponseEntity.ok().body(memberService.findMember(id));
     }
+
+    @GetMapping("/findByAtt/{id}")
+    public ResponseEntity<MemberRespDTO> findMemberBySearchParam(@RequestParam String searchParam) {
+        MemberRespDTO member = memberService.findMemberByAtt(searchParam);
+        if (member != null) {
+            return ResponseEntity.ok(member);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteQuiz(@PathVariable Integer id)
     {
