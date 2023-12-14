@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class RankingRespDTO {
-    private RankingID id;
+    private RankingIDResp id;
     private int rank;
     private int score;
 }

@@ -41,7 +41,7 @@ public class MemberController {
         return ResponseEntity.ok().body(memberService.findMember(id));
     }
 
-    @GetMapping("/findByAtt/{id}")
+    @GetMapping("/findByAtt/{searchParam}")
     public ResponseEntity<MemberRespDTO> findMemberBySearchParam(@RequestParam String searchParam) {
         MemberRespDTO member = memberService.findMemberByAtt(searchParam);
         if (member != null) {

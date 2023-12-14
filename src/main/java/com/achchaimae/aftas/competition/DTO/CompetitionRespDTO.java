@@ -2,6 +2,7 @@ package com.achchaimae.aftas.competition.DTO;
 
 import com.achchaimae.aftas.hunting.DTO.HuntingReqDTO;
 import com.achchaimae.aftas.ranking.DTO.RankingReqDTO;
+import com.achchaimae.aftas.ranking.DTO.RankingRespDTOForCompetition;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class CompetitionRespDTO {
     private Integer numberOfParticipants;
     private String Location;
     private Float amount ;
-    private List<RankingReqDTO> ranking;
+    private List<RankingRespDTOForCompetition> rankings;
     private List<HuntingReqDTO> hunting;
 }
 

@@ -9,7 +9,7 @@ public interface RankingServiceInterface {
 
     List<RankingRespDTO> getRankings();
     RankingRespDTO saveRanking(RankingReqDTO ranking);
-    RankingRespDTO updateRanking(RankingReqDTO ranking, Integer id);
+//    RankingRespDTO updateRanking(RankingReqDTO ranking, Integer id);
     Integer DeleteHunting(Integer rankingId);
     RankingRespDTO findRanking(Integer rankingId);
 }

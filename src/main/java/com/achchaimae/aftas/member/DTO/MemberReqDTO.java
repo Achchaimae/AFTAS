@@ -1,6 +1,7 @@
 package com.achchaimae.aftas.member.DTO;
 
 import com.achchaimae.aftas.member.Enum.IdentityDocumentType;
+import com.achchaimae.aftas.ranking.DTO.RankingIDReq;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -22,5 +23,5 @@ public class MemberReqDTO {
     @NotBlank(message = "Identity number is required")
     private String identityNumber;
     private Integer huntingId;
-    private Integer rankingId;
+    private RankingIDReq rankingId;
 }

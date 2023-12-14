@@ -42,20 +42,28 @@ public class HuntingService implements HuntingServiceInterface {
     }
 
     public HuntingRespDTO saveHunting(HuntingReqDTO hunting) {
-    Hunting hunting1 = modelMapper.map(hunting,Hunting.class);
-    competition = competitionRepository.findById(String.valueOf(hunting.getCompetition_Id()));
+        Hunting hunting1 = modelMapper.map(hunting, Hunting.class);
+        competition = competitionRepository.findById(String.valueOf(hunting.getCompetition_Id()));
         member = memberRepository.findById(hunting.getMember_Id());
         fish = fishRepository.findById(String.valueOf(hunting.getFish_Id()));
-        if(competition.isPresent() && member.isPresent() && fish.isPresent()){
+
+        if (competition.isPresent() && member.isPresent() && fish.isPresent()) {
             hunting1.setCompetition(competition.get());
             hunting1.setMember(member.get());
             hunting1.setFish(fish.get());
+
+
+            Optional<Hunting> huntingOptional = huntingRepository.findByFishAndMemberAndCompetition(fish.get(), member.get(), competition.get());
+            if (huntingOptional.isPresent()) {
+
+                hunting1.setId(huntingOptional.get().getId());
+                hunting1.setNumberOfFish(hunting1.getNumberOfFish() + huntingOptional.get().getNumberOfFish());
+            }
         }
 
-    hunting1 = huntingRepository.save(hunting1);
-    return modelMapper.map(hunting1,HuntingRespDTO.class);
+        hunting1 = huntingRepository.save(hunting1);
+        return modelMapper.map(hunting1, HuntingRespDTO.class);
     }
-
 public HuntingRespDTO updateHunting(HuntingReqDTO hunting, Integer id) {
     return huntingRepository.findById(id)
             .map(existingHunting -> {

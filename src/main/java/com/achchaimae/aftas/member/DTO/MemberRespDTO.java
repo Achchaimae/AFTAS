@@ -6,6 +6,7 @@ import com.achchaimae.aftas.ranking.DTO.RankingReqDTO;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MemberRespDTO {
@@ -16,8 +17,8 @@ public class MemberRespDTO {
     private String nationality;
     private IdentityDocumentType identityDocumentType;
     private String identityNumber;
-    private HuntingReqDTO huntings;
-    private RankingReqDTO rankings;
+    private List<HuntingReqDTO> huntings;
+    private List<RankingReqDTO> rankings;
 
 
 }
