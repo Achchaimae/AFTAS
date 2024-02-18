@@ -1,10 +1,7 @@
 package com.achchaimae.aftas.fish;
 
-import com.achchaimae.aftas.fish.DTO.FishReqDTO;
-import com.achchaimae.aftas.fish.DTO.FishRespDTO;
-import com.achchaimae.aftas.level.DTO.LevelReqDTO;
-import com.achchaimae.aftas.level.DTO.LevelRespDTO;
-import com.achchaimae.aftas.level.Level;
+import com.achchaimae.aftas.fish.dto.FishReqDTO;
+import com.achchaimae.aftas.fish.dto.FishRespDTO;
 import com.achchaimae.aftas.level.LevelRepository;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;

@@ -1,7 +1,7 @@
 package com.achchaimae.aftas.member;
 
-import com.achchaimae.aftas.member.DTO.MemberReqDTO;
-import com.achchaimae.aftas.member.DTO.MemberRespDTO;
+import com.achchaimae.aftas.member.dto.MemberReqDTO;
+import com.achchaimae.aftas.member.dto.MemberRespDTO;
 
 import java.util.List;
 

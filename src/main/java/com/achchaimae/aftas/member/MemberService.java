@@ -2,8 +2,8 @@ package com.achchaimae.aftas.member;
 
 import com.achchaimae.aftas.Exception.RecordAlreadyExistsException;
 import com.achchaimae.aftas.Exception.ResourceNotFoundException;
-import com.achchaimae.aftas.member.DTO.MemberReqDTO;
-import com.achchaimae.aftas.member.DTO.MemberRespDTO;
+import com.achchaimae.aftas.member.dto.MemberReqDTO;
+import com.achchaimae.aftas.member.dto.MemberRespDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,10 +28,6 @@ public class MemberService implements MemberServiceInterface{
         return memberRepository.findAll().stream().map(member -> modelMapper.map(member, MemberRespDTO.class)).collect(Collectors.toList());
     }
 
-//    public MemberRespDTO saveMember(MemberReqDTO member) {
-//        return modelMapper.map(memberRepository.save(modelMapper.map(member, Member.class)), MemberRespDTO.class);
-//
-//    }
     public MemberRespDTO saveMember(MemberReqDTO member) {
         // Check if the member already exists
         if (memberRepository.existsById(member.getNum())) {

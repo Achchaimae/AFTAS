@@ -1,7 +1,8 @@
 package com.achchaimae.aftas.ranking;
 
-import com.achchaimae.aftas.ranking.DTO.RankingReqDTO;
-import com.achchaimae.aftas.ranking.DTO.RankingRespDTO;
+import com.achchaimae.aftas.ranking.dto.RankingIDReq;
+import com.achchaimae.aftas.ranking.dto.RankingReqDTO;
+import com.achchaimae.aftas.ranking.dto.RankingRespDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,20 +30,15 @@ public class RankingController {
         RankingRespDTO ranking1 = rankingService.saveRanking(ranking);
         return ResponseEntity.ok().body(ranking1);
     }
-
-//    @PutMapping("/{competitionCode}")
-//    public ResponseEntity<RankingRespDTO> update(@PathVariable Integer id, @RequestBody RankingReqDTO ranking)
-//    {
-//        return ResponseEntity.ok().body(rankingService.updateRankings(ranking,id);
-//    }
-//    public void updateRankingsForCompetition(@RequestBody String competitionCode) {
-//        rankingService.updateRankingsForCompetition(competitionCode);
-//    }
-
     @GetMapping("/find/{id}")
     public ResponseEntity<RankingRespDTO> getRankingById(@PathVariable Integer id)
     {
         return ResponseEntity.ok().body(rankingService.findRanking(id));
+    }
+    @GetMapping("findByCompOrder/{searchterm}")
+    public ResponseEntity<List<RankingRespDTO>> getRankCompOrder(@PathVariable String searchterm)
+    {
+        return ResponseEntity.ok().body(rankingService.findByCompOrder(searchterm));
     }
     @GetMapping("findByComp/{searchterm}")
     public ResponseEntity<List<RankingRespDTO>> getRankComp(@PathVariable String searchterm)
@@ -55,15 +51,14 @@ public class RankingController {
     {
         return ResponseEntity.ok().body(rankingService.calculateAndFetchRankings(code));
     }
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id)
-    {
-        Integer deleted = rankingService.DeleteHunting(id);
-        if(deleted == 1)
-        {
-            return ResponseEntity.ok().body("ranking deleted");
-        }
-        return ResponseEntity.badRequest().body("ranking not deleted");
+
+    @DeleteMapping("/{competition_code}/{member_id}")
+    public void delete(@PathVariable String competition_code,@PathVariable Integer member_id) {
+        RankingIDReq rankingIdReqDTO = new RankingIDReq();
+        rankingIdReqDTO.setMember_id(member_id);
+        rankingIdReqDTO.setCompetition_id(competition_code);
+        Integer deleted = rankingService.Delete(rankingIdReqDTO);
     }
+
 
 }

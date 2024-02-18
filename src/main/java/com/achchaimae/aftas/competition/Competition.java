@@ -1,5 +1,6 @@
 package com.achchaimae.aftas.competition;
 
+import com.achchaimae.aftas.competition.Enum.Etat;
 import com.achchaimae.aftas.hunting.Hunting;
 import com.achchaimae.aftas.ranking.Ranking;
 import jakarta.persistence.*;
@@ -24,6 +25,7 @@ public class Competition implements Serializable {
     private Integer numberOfParticipants;
     private String Location;
     private Float amount ;
+    private Etat etat;
 
     @OneToMany(mappedBy = "id.competition",cascade = { CascadeType.MERGE, CascadeType.REMOVE })
     private List<Ranking> rankings;

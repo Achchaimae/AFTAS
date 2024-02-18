@@ -1,7 +1,7 @@
 package com.achchaimae.aftas.level;
 
-import com.achchaimae.aftas.level.DTO.LevelReqDTO;
-import com.achchaimae.aftas.level.DTO.LevelRespDTO;
+import com.achchaimae.aftas.level.dto.LevelReqDTO;
+import com.achchaimae.aftas.level.dto.LevelRespDTO;
 
 import java.util.List;
 

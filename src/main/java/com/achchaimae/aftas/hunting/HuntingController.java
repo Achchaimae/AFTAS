@@ -1,7 +1,7 @@
 package com.achchaimae.aftas.hunting;
 
-import com.achchaimae.aftas.hunting.DTO.HuntingReqDTO;
-import com.achchaimae.aftas.hunting.DTO.HuntingRespDTO;
+import com.achchaimae.aftas.hunting.dto.HuntingReqDTO;
+import com.achchaimae.aftas.hunting.dto.HuntingRespDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

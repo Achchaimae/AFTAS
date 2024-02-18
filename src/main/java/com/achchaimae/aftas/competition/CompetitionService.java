@@ -2,17 +2,18 @@ package com.achchaimae.aftas.competition;
 
 import com.achchaimae.aftas.Exception.RecordAlreadyExistsException;
 import com.achchaimae.aftas.Exception.ResourceNotFoundException;
-import com.achchaimae.aftas.competition.DTO.CompetitionReqDTO;
-import com.achchaimae.aftas.competition.DTO.CompetitionRespDTO;
+import com.achchaimae.aftas.competition.Enum.Etat;
+import com.achchaimae.aftas.competition.dto.CompetitionReqDTO;
+import com.achchaimae.aftas.competition.dto.CompetitionRespDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CompetitionService implements CompetitionServiceInterface{
@@ -24,14 +25,30 @@ public class CompetitionService implements CompetitionServiceInterface{
     }
     @Autowired
     ModelMapper modelMapper;
-//    public List<CompetitionRespDTO> getCompetitions() {
-//        return competitionRepository.findAll().stream().map(competition -> modelMapper.map(competition, CompetitionRespDTO.class)).collect(Collectors.toList());
-//    }
-//
+
 
     public Page<CompetitionRespDTO> getCompetitions(Pageable pageable) {
-        Page<Competition> entityPage = competitionRepository.findAll(pageable);
-        return entityPage.map(entity -> modelMapper.map(entity, CompetitionRespDTO.class));
+
+        Page<Competition> competitions = competitionRepository.findAll(pageable);
+        competitions.getContent().forEach(competition -> {
+            int result = competition.getDate().compareTo(LocalDate.now());
+            long daysDifference = ChronoUnit.DAYS.between(LocalDate.now(), competition.getDate());
+            if (result < 0) {
+                competition.setEtat(Etat.close);
+            } else if (result > 0) {
+                if (daysDifference == 1) {
+                    competition.setEtat(Etat.one_day_remaining);
+                }
+                competition.setEtat(Etat.waiting);
+            } else {
+                competition.setEtat(Etat.Pending);
+            }
+            competitionRepository.save(modelMapper.map(competition,Competition.class));
+        });
+        Page<CompetitionRespDTO> competitionRespDTOS = competitions
+                .map(competition -> modelMapper.map(competition, CompetitionRespDTO.class));
+        return competitionRespDTOS;
+
     }
 
 public CompetitionRespDTO saveCompetition(CompetitionReqDTO competition) {
@@ -42,6 +59,11 @@ public CompetitionRespDTO saveCompetition(CompetitionReqDTO competition) {
     return modelMapper.map(competitionRepository.save(modelMapper.map(competition, Competition.class)), CompetitionRespDTO.class);
 }
 
+    public Page<CompetitionRespDTO> getAllWithPaginationByEtat(Pageable pageable, Etat etat) {
+        Page<Competition> competitions = competitionRepository.findAllByEtat(etat, pageable);
+        return competitions
+                .map(competition -> modelMapper.map(competition, CompetitionRespDTO.class));
+    }
 public CompetitionRespDTO updateCompetition(CompetitionReqDTO competition, String code) {
     Optional<Competition> competitionOptional = competitionRepository.findById(code);
     if (competitionOptional.isPresent()) {

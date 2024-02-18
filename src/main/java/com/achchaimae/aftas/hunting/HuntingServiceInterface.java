@@ -1,8 +1,8 @@
 package com.achchaimae.aftas.hunting;
 
 
-import com.achchaimae.aftas.hunting.DTO.HuntingReqDTO;
-import com.achchaimae.aftas.hunting.DTO.HuntingRespDTO;
+import com.achchaimae.aftas.hunting.dto.HuntingReqDTO;
+import com.achchaimae.aftas.hunting.dto.HuntingRespDTO;
 
 import java.util.List;
 

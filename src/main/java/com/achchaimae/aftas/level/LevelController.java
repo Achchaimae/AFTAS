@@ -54,8 +54,8 @@
 //    }
 package com.achchaimae.aftas.level;
 
-import com.achchaimae.aftas.level.DTO.LevelReqDTO;
-import com.achchaimae.aftas.level.DTO.LevelRespDTO;
+import com.achchaimae.aftas.level.dto.LevelReqDTO;
+import com.achchaimae.aftas.level.dto.LevelRespDTO;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

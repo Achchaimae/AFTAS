@@ -1,7 +1,8 @@
 package com.achchaimae.aftas.competition;
 
-import com.achchaimae.aftas.competition.DTO.CompetitionReqDTO;
-import com.achchaimae.aftas.competition.DTO.CompetitionRespDTO;
+import com.achchaimae.aftas.competition.Enum.Etat;
+import com.achchaimae.aftas.competition.dto.CompetitionReqDTO;
+import com.achchaimae.aftas.competition.dto.CompetitionRespDTO;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,10 @@ public class CompetitionController {
     @Autowired
     ModelMapper modelMapper;
 
-//    @GetMapping
-//    public ResponseEntity<List<CompetitionRespDTO>> getCompetition(){
-//        return ResponseEntity.ok().body(competitionService.getCompetitions());
-//    }
+    @GetMapping("/etat/{etat}")
+    public ResponseEntity<Page<CompetitionRespDTO>> getAllwidthEtat(@PathVariable Etat etat, Pageable pageable) {
+        return ResponseEntity.ok().body(this.competitionService.getAllWithPaginationByEtat(pageable , etat));
+    }
 @GetMapping
 public ResponseEntity<Page<CompetitionRespDTO>> getCompetition(Pageable pageable) {
 

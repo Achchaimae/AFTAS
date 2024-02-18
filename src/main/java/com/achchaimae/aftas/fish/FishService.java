@@ -1,7 +1,7 @@
 package com.achchaimae.aftas.fish;
 
-import com.achchaimae.aftas.fish.DTO.FishReqDTO;
-import com.achchaimae.aftas.fish.DTO.FishRespDTO;
+import com.achchaimae.aftas.fish.dto.FishReqDTO;
+import com.achchaimae.aftas.fish.dto.FishRespDTO;
 
 import com.achchaimae.aftas.level.Level;
 import com.achchaimae.aftas.level.LevelRepository;

@@ -1,7 +1,7 @@
 package com.achchaimae.aftas.ranking;
 
-import com.achchaimae.aftas.ranking.DTO.RankingReqDTO;
-import com.achchaimae.aftas.ranking.DTO.RankingRespDTO;
+import com.achchaimae.aftas.ranking.dto.RankingReqDTO;
+import com.achchaimae.aftas.ranking.dto.RankingRespDTO;
 
 import java.util.List;
 
